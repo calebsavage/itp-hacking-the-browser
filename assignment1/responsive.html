@@ -26,17 +26,69 @@ const sizeY = 500;
 const centerX = sizeX * 0.5;
 const centerY = sizeY * 0.5;
 
+
+let lastX = 0;
+let lastY = 0;
+let lastZ = 0;
+
+let broke = false;
+let count = 0;
+
+const thresh = 1; //threshhold for breaking the egg
+
+let font,
+  fontsize = 40;
+
+function preload() {
+  // Ensure the .ttf or .otf font stored in the assets directory
+  // is loaded before setup() and draw() are called
+  font = loadFont('roboto.ttf');
+}
+
 function setup() {
 
   createCanvas(sizeX, sizeY);
-  
+  textFont(font);
+  textSize(fontsize);
+  textAlign(CENTER, CENTER);
 
 
 }
 
 function draw() {
-	background(220);
+count +=1;
 
+	if(broke){
+		background(200);
+		fill(250);
+		ellipse(centerX,centerY,230,220);
+
+
+		fill(255,255,0);
+		noStroke();
+		ellipse(centerX, centerY, 80, 90)
+
+
+		fill(0);
+		text('You broke the egg!',centerX,100);
+	}else{
+		background(200);
+
+	let xJerk = abs(lastX-xAccel);
+	let yJerk = abs(lastY-yAccel);
+	let zJerk = abs(lastZ-zAccel);
+	console.log("xJerk"+ xJerk);
+	console.log("yJerk" + yJerk);
+	console.log("zJerk"+zJerk);
+
+	if(xJerk > thresh || yJerk > thresh || zJerk > thresh){
+		console.log("Broke egg");
+		if(count > 200){
+				broke = true;
+	
+		}
+
+	}
 	if(xPos > sizeX){
 		xPos = sizeX - 20;
 	}
@@ -58,15 +110,23 @@ function draw() {
 
 
 
-	fill(0);
+	fill(170);
 	ellipse(
 	  xPos,
 	 yPos,
-	 zPos,
-	 zAccel * scale);
+	 40,
+	 60);
 	$('#xAccel').text(xAccel * scale);
 	$('#yAccel').text(yAccel * scale);
 	$('#zAccel').text(zAccel * scale);
+
+	lastX = xAccel;
+	lastY = yAccel;
+	lastZ = zAccel;
+
+	}
+	
+
 
 }
 
