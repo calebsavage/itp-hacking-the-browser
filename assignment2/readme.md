@@ -64,7 +64,6 @@ This is not entirely functional yet, I think I am running into trouble with esca
       
     });
 
-
   
 An alternative solution, similarly malicious but perhaps more elegant, would be to search for existing forms on the page (like a login form) and change its destination URL to a server I control. This would be less obtrusive/detectable for the user, and possibly be more efficient at swiping useful data (like passwords).
 
