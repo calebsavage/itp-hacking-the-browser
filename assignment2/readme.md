@@ -22,7 +22,7 @@ Instead, I tried using a more traditional HTML form that POSTS to an external UR
     </form>");
 The submit button is not really necessary but is useful for debugging.
 
-This creates an HTML form with the current page's contents as a hidden input field. It also puts the current URL as one of the fields, so our malicious server knows where to send the user back to after ingesting the stolen data, so that the user may not even notice that they've left their intended page, visited a malicious server, and gone back to where they started. Because we're using a traditional HTML form, we will need to actually leave the current page when we POST the data. But we can cover that up easy enough...
+This creates an HTML form with the current page's contents as a hidden input field. It also puts the current URL as one of the fields, so our malicious server knows where to send the user back to after ingesting the stolen data, so that the user may not even notice that they've left their intended page, visited a malicious server, and gone back to where they started. Because we're using a traditional HTML form, we will need to actually leave the current page when we POST the data. But we can cover that up easy enough by immediately redirecting the user back to the original page they were on.
 
 After a delay, we can then submit the form
 
