@@ -4,7 +4,7 @@ body{
 
 .rocket{
 	height: 20px;
-	width: 20px;
+	width: 10px;
 	background-color:red;
 	position: fixed;
 	z-index:999999999999999999999999999999999999999999999999999999999999;
