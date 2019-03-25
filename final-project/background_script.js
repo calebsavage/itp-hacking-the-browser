@@ -8,18 +8,30 @@ console.log('hey from bg');
 // 	});
 // })
 
+let urls = []; //keeep a list of all urls we are sending requests to, so that each can have a reliable (though moving as the array expands)
+				// position on the x-axis-- a request going to a particular url is going to get aimed at a point representing it
+
 var onBeforeRequestcallback = function(request) {
 	console.log("onBeforeRequest");
 	console.log(request);
+	console.log('tid: '+request.tabId);
 
+	if(!urls.includes(request.url)){
+		urls.push(request.url);
+	}//add url to the list if it's a new one
+	var spriteLoaded;
+	chrome.storage.sync.get(['sprite'], function(result) {
+          console.log('Value currently is ' + result.sprite);
+          spriteLoaded =  result.sprite;
 
-
-		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-	 		chrome.tabs.sendMessage(tabs[0].id, {url: request.url, action: "onBeforeRequest", requestId: request.requestId}, 
+          chrome.tabs.sendMessage(request.tabId, {url: request.url, sprite: spriteLoaded, action: "onBeforeRequest", requestId: request.requestId, urlArray: urls}, 
 	 			function(response) {
 	    			console.log(response);
 	  		});
-		});
+        });
+      
+
+		
 
 
 };
@@ -29,22 +41,28 @@ var onBeforeRequestcallback = function(request) {
 chrome.webRequest.onBeforeRequest.addListener(
         onBeforeRequestcallback, filter, opt_extraInfoSpec);
 
+
+
+
+
 var onCompletedCallback = function(request) {
 	console.log("onCompletedCallback");
 	console.log(request);
 
 
 
-		chrome.tabs.query({active: true}, function(tabs) {
-	 		chrome.tabs.sendMessage(tabs[0].id, {complete:true, url: request.url, action: "onCompleted", requestId: request.requestId}, 
+		chrome.tabs.sendMessage(request.tabId, 
+			{url: request.url, 
+			action: "onCompleted", 
+			requestId: request.requestId, 
+			statusCode : request.statusCode}, 
 	 			function(response) {
 	    			console.log(response);
 	  		});
-		});
 
 
 };
-     
 
 chrome.webRequest.onCompleted.addListener(
         onCompletedCallback, filter, opt_extraInfoSpec);
+     

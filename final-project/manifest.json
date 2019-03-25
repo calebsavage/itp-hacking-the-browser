@@ -5,8 +5,11 @@
 
 	"browser_action" : {
 
-		"default_title": "Rockets"
+		"default_title": "Rockets",
+		"default_popup" : "popup.html"
+
 	},
+	
 	"content_scripts": [
 		{
 			"matches" : ["<all_urls>"],
@@ -20,9 +23,13 @@
 		"scripts":["background_script.js"]
 	},
 
+	"web_accessible_resources" : ["rocket.gif"],
+
+
 
 	"permissions": [
 		"webRequest",
-    	"activeTab"
+    	"activeTab",
+    	"storage"
   ]
 }
